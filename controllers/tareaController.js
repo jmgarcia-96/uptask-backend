@@ -24,9 +24,11 @@ const agregarTarea = async (req, res) => {
     return res.status(403).json({ msg: error.message });
   }
 
-  const tarea = new Tarea(req.body);
   try {
+    const tarea = new Tarea(req.body);
     const tareaAlmacenada = await tarea.save();
+    existeProyecto.tareas.push(tareaAlmacenada._id);
+    await existeProyecto.save();
     res.json(tareaAlmacenada);
   } catch (error) {
     console.log(error);
