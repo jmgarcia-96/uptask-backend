@@ -40,7 +40,6 @@ const obtenerProyecto = async (req, res) => {
       populate: { path: "completado", select: "nombre" },
     })
     .populate("colaboradores", "nombre email");
-  console.log(proyecto.completado);
   if (!proyecto) {
     const error = new Error("Proyecto no encontrado");
     return res.status(404).json({ msg: error.message });
@@ -192,7 +191,6 @@ const eliminarColaborador = async (req, res) => {
   }
 
   const { id } = req.body;
-  console.log(id);
 
   const usuario = await Usuario.findById(id).select(
     "-confirmado -createdAt -password -token -updatedAt -__v"
